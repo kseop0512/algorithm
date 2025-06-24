@@ -1,0 +1,17 @@
+-- 코드를 입력하세요
+
+SELECT
+BK.CATEGORY
+, SUM(TEMP.TOTAL_SALES) AS TOTAL_SALES
+FROM BOOK BK
+INNER JOIN (
+select 
+book_id
+, sum(sales) AS TOTAL_SALES
+from book_sales
+where DATE_FORMAT(SALES_DATE, '%Y%m') = '202201'
+group by book_id 
+) TEMP ON TEMP.BOOK_ID = BK.BOOK_ID
+GROUP BY BK.CATEGORY
+ORDER BY BK.CATEGORY
+
