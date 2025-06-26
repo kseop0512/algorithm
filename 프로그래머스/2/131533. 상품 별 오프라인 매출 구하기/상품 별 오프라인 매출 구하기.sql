@@ -1,0 +1,16 @@
+-- 코드를 입력하세요
+
+SELECT 
+    PD.PRODUCT_CODE
+    , (PD.PRICE * TBL.PD_SUM) AS SALES
+FROM PRODUCT PD
+INNER JOIN (
+    SELECT
+        PRODUCT_ID
+        , SUM(sales_amount) AS PD_SUM
+    FROM OFFLINE_SALE 
+    GROUP BY product_id
+    ORDER BY product_id
+) TBL ON TBL.PRODUCT_ID = PD.PRODUCT_ID
+ORDER BY SALES DESC, PRODUCT_CODE
+
